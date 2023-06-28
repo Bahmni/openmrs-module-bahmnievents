@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.0//EN" "http://resources.openmrs.org/doctype/config-1.6.dtd">
+
+<module configVersion="1.6">
+
+    <id>bahmni-events</id>
+    <name>Bahmni Events</name>
+    <version>${project.parent.version}</version>
+    <description>Provides bahmni events</description>
+    <package>org.bahmni.module.events</package>
+    <author>Bahmni</author>
+
+    <activator>org.bahmni.module.events.EventsActivator</activator>
+
+    <require_version>1.11.6</require_version>
+
+    <messages>
+        <lang>en</lang>
+        <file>messages.properties</file>
+    </messages>
+    <messages>
+        <lang>fr</lang>
+        <file>messages_fr.properties</file>
+    </messages>
+    <messages>
+        <lang>es</lang>
+        <file>messages_es.properties</file>
+    </messages>
+
+    <!-- AOP -->
+    <!-- Required Privileges -->
+    <privilege>
+        <name>Bahmni Events</name>
+        <description>Will give access to send events</description>
+    </privilege>
+
+</module>
