@@ -1,4 +1,4 @@
-package org.bahmni.module.events.listner;
+package org.bahmni.module.events.listener;
 
 import org.bahmni.module.events.model.Event;
 import org.junit.Before;

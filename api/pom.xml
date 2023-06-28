@@ -11,7 +11,7 @@
 	<artifactId>bahmni-events-api</artifactId>
 	<packaging>jar</packaging>
 	<name>Bahmni Events API</name>
-	<description>Bahmni Events API for consuming and publishing bahmni events</description>
+	<description>Bahmni Events API for publishing bahmni events</description>
 
 	<!--    Added build for making events works -->
 	<build>

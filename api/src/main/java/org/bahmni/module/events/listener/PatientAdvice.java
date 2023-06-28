@@ -1,4 +1,4 @@
-package org.bahmni.module.events.listner;
+package org.bahmni.module.events.listener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
