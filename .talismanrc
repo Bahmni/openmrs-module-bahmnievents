@@ -1,0 +1,5 @@
+fileignoreconfig:
+- filename: .github/workflows/build_publish.yaml
+  checksum: 1efb4c80cff364ffc2e0a551010beb0df85962cac2745ed9e1f62885a801cf69
+- filename: LICENSE
+  checksum: 0a9e880e3e9f3b281613be0a66e451fd1cb4e85e37c1cd281eeb12bba1ab79c3

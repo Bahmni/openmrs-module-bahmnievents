@@ -12,6 +12,7 @@ import org.springframework.jms.core.MessageCreator;
 import java.io.IOException;
 import java.util.Date;
 
+import static org.bahmni.module.events.model.BahmniEventType.PATIENT_CREATED_UPDATED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -27,11 +28,10 @@ public class EventPublisherTest {
 		eventPublisher = new EventPublisher(jmsTemplate, objectMapper);
 
 		Person person = getPerson();
-		String eventType = "bahmni-patient";
-		Event event = new Event(eventType, person, "bce786c0-aa57-480d-be6a-23692590086b");
+		Event event = new Event(PATIENT_CREATED_UPDATED, person, person.getUuid());
 		eventPublisher.onApplicationEvent(event);
 
-		verify(jmsTemplate, times(1)).send(eq(eventType), any(MessageCreator.class));
+		verify(jmsTemplate, times(1)).send(eq(PATIENT_CREATED_UPDATED.topic()), any(MessageCreator.class));
 	}
 
 	@Test
@@ -42,8 +42,7 @@ public class EventPublisherTest {
 		eventPublisher = new EventPublisher(jmsTemplate, objectMapper);
 
 		Person person = getPerson();
-		String eventType = "bahmni-patient";
-		Event event = new Event(eventType, person, "bce786c0-aa57-480d-be6a-23692590086b");
+		Event event = new Event(PATIENT_CREATED_UPDATED, person, person.getUuid());
 
 		String errorMessage = "Error in converting to json";
 		try {

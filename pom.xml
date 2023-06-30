@@ -25,9 +25,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git@github.com:riteshghiya90/bahmni-events.git</connection>
-		<developerConnection>scm:git:https://github.com/riteshghiya90/bahmni-events.git</developerConnection>
-		<url>https://github.com/riteshghiya90/bahmni-events/</url>
+		<connection>scm:git:git@github.com:Bahmni/openmrs-module-bahmnievents.git</connection>
+		<developerConnection>scm:git:https://github.com/Bahmni/openmrs-module-bahmnievents.git</developerConnection>
+		<url>https://github.com/Bahmni/openmrs-module-bahmnievents/</url>
 	</scm>
 
 	<modules>
@@ -148,7 +148,7 @@
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>webservices.rest-omod-common</artifactId>
-				<version>2.39.0</version>
+				<version>${openMRSWebServicesVersion}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -268,10 +268,10 @@
 			<name>Sonatype Nexus Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/releases</url>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 	</repositories>

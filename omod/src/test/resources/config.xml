@@ -5,33 +5,17 @@
 
     <id>bahmni-events</id>
     <name>Bahmni Events</name>
-    <version>${project.parent.version}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <description>Provides bahmni events</description>
-    <package>org.bahmni.module.events</package>
-    <author>Bahmni</author>
+    <package>${MODULE_PACKAGE}</package>
+    <author>Bahmni TW</author>
+
+    <require_modules>
+        <require_module>org.openmrs.module.webservices.rest</require_module>
+        <require_module>org.bahmni.module.bahmnicore</require_module>
+    </require_modules>
 
     <activator>org.bahmni.module.events.EventsActivator</activator>
 
     <require_version>1.11.6</require_version>
-
-    <messages>
-        <lang>en</lang>
-        <file>messages.properties</file>
-    </messages>
-    <messages>
-        <lang>fr</lang>
-        <file>messages_fr.properties</file>
-    </messages>
-    <messages>
-        <lang>es</lang>
-        <file>messages_es.properties</file>
-    </messages>
-
-    <!-- AOP -->
-    <!-- Required Privileges -->
-    <privilege>
-        <name>Bahmni Events</name>
-        <description>Will give access to send events</description>
-    </privilege>
-
 </module>

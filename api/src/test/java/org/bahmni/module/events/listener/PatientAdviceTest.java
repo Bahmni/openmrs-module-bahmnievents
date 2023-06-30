@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.bahmni.module.events.model.BahmniEventType.PATIENT_CREATED_UPDATED;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -64,7 +65,7 @@ public class PatientAdviceTest {
 		verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 		
 		Event event = eventArgumentCaptor.getValue();
-		assertEquals("bahmni-patient", event.eventType);
+		assertEquals(PATIENT_CREATED_UPDATED, event.eventType);
 		assertEquals(newPatient.getUuid(), event.payloadId);
 	}
 	

@@ -13,7 +13,7 @@
 	<artifactId>bahmni-events-omod</artifactId>
 	<packaging>jar</packaging>
 	<name>Bahmni Events omod</name>
-	<description>Bahmni module for events</description>
+	<description>Bahmni module for sending events on JMS</description>
 
 	<properties>
 		<MODULE_ID>bahmni-events</MODULE_ID>
