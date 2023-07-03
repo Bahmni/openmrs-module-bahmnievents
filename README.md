@@ -10,9 +10,6 @@ The format of the event payload is in OpenMRS format.
 
 ### Prerequisite
     JDK 1.8
-    ruby 2.2+
-    RubyGems
-    Compass 1.0.3 (gem install compass)
 
 ## Deploy
 
