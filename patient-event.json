@@ -1,0 +1,232 @@
+{
+  "uuid": "a751f0da-39ab-45a3-db52-21706f5ed201",
+  "display": "GAN203011 - Test Con",
+  "identifiers": [
+    {
+      "display": "Patient Identifier = GAN203011",
+      "uuid": "9e811ee2-d1f4-4dde-ad04-1518ad50788b",
+      "identifier": "GAN203011",
+      "identifierType": {
+        "uuid": "81433852-3f10-11e4-adec-0800271c1b75",
+        "display": "Patient Identifier",
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/patientidentifiertype/81433852-3f10-11e4-adec-0800271c1b75"
+          }
+        ]
+      },
+      "location": null,
+      "preferred": true,
+      "voided": false,
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/patient/a751f0da-39ab-45a3-db52-21706f5ed201/identifier/9e811ee2-d1f4-4dde-ad04-1518ad50788b"
+        },
+        {
+          "rel": "full",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/patient/a751f0da-39ab-45a3-db52-21706f5ed201/identifier/9e811ee2-d1f4-4dde-ad04-1518ad50788b?v=full"
+        }
+      ],
+      "resourceVersion": "1.8"
+    },
+    {
+      "display": "National ID = NAT2809",
+      "uuid": "f7cf6ee7-7321-4317-a183-b4db7bf4167f",
+      "identifier": "NAT2809",
+      "identifierType": {
+        "uuid": "0d2ac572-8de3-46c8-9976-1f78899c599f",
+        "display": "National ID",
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/patientidentifiertype/0d2ac572-8de3-46c8-9976-1f78899c599f"
+          }
+        ]
+      },
+      "location": null,
+      "preferred": false,
+      "voided": false,
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/patient/a751f0da-39ab-45a3-db52-21706f5ed201/identifier/f7cf6ee7-7321-4317-a183-b4db7bf4167f"
+        },
+        {
+          "rel": "full",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/patient/a751f0da-39ab-45a3-db52-21706f5ed201/identifier/f7cf6ee7-7321-4317-a183-b4db7bf4167f?v=full"
+        }
+      ],
+      "resourceVersion": "1.8"
+    }
+  ],
+  "person": {
+    "uuid": "a751f0da-39ab-45a3-db52-21706f5ed201",
+    "display": "Test Con",
+    "gender": "M",
+    "age": 27,
+    "birthdate": "1995-06-06T00:00:00.000+0530",
+    "birthdateEstimated": false,
+    "dead": false,
+    "deathDate": null,
+    "causeOfDeath": null,
+    "preferredName": {
+      "display": "Test Con",
+      "uuid": "70dfed83-a323-4832-d73e-fc667b049773",
+      "givenName": "Test",
+      "middleName": null,
+      "familyName": "Con",
+      "familyName2": null,
+      "voided": false,
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/name/70dfed83-a323-4832-d73e-fc667b049773"
+        },
+        {
+          "rel": "full",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/name/70dfed83-a323-4832-d73e-fc667b049773?v=full"
+        }
+      ],
+      "resourceVersion": "1.8"
+    },
+    "preferredAddress": null,
+    "names": [
+      {
+        "display": "Test Con",
+        "uuid": "70dfed83-a323-4832-d73e-fc667b049773",
+        "givenName": "Test",
+        "middleName": null,
+        "familyName": "Con",
+        "familyName2": null,
+        "voided": false,
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/name/70dfed83-a323-4832-d73e-fc667b049773"
+          },
+          {
+            "rel": "full",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/name/70dfed83-a323-4832-d73e-fc667b049773?v=full"
+          }
+        ],
+        "resourceVersion": "1.8"
+      }
+    ],
+    "addresses": [],
+    "attributes": [
+      {
+        "display": "General",
+        "uuid": "396db6e6-0f01-4279-8646-76ac3c862595",
+        "value": {
+          "uuid": "c1fc20ab-3f10-11e4-adec-0800271c1b75",
+          "display": "General",
+          "links": [
+            {
+              "rel": "self",
+              "uri": "http://localhost:8050/openmrs/ws/rest/v1/concept/c1fc20ab-3f10-11e4-adec-0800271c1b75"
+            }
+          ]
+        },
+        "attributeType": {
+          "uuid": "c1f455e7-3f10-11e4-adec-0800271c1b75",
+          "display": "class",
+          "links": [
+            {
+              "rel": "self",
+              "uri": "http://localhost:8050/openmrs/ws/rest/v1/personattributetype/c1f455e7-3f10-11e4-adec-0800271c1b75"
+            }
+          ]
+        },
+        "voided": false,
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/attribute/396db6e6-0f01-4279-8646-76ac3c862595"
+          },
+          {
+            "rel": "full",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/attribute/396db6e6-0f01-4279-8646-76ac3c862595?v=full"
+          }
+        ],
+        "resourceVersion": "1.8"
+      },
+      {
+        "display": "landHolding = 2",
+        "uuid": "de08e0bf-b6b1-4226-9a10-c1593b67fd65",
+        "value": 2,
+        "attributeType": {
+          "uuid": "3dfdc176-17fd-42b1-b5be-c7e25b78b602",
+          "display": "landHolding",
+          "links": [
+            {
+              "rel": "self",
+              "uri": "http://localhost:8050/openmrs/ws/rest/v1/personattributetype/3dfdc176-17fd-42b1-b5be-c7e25b78b602"
+            }
+          ]
+        },
+        "voided": false,
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/attribute/de08e0bf-b6b1-4226-9a10-c1593b67fd65"
+          },
+          {
+            "rel": "full",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201/attribute/de08e0bf-b6b1-4226-9a10-c1593b67fd65?v=full"
+          }
+        ],
+        "resourceVersion": "1.8"
+      }
+    ],
+    "voided": false,
+    "auditInfo": {
+      "creator": {
+        "uuid": "c1c21e11-3f10-11e4-adec-0800271c1b75",
+        "display": "superman",
+        "links": [
+          {
+            "rel": "self",
+            "uri": "http://localhost:8050/openmrs/ws/rest/v1/user/c1c21e11-3f10-11e4-adec-0800271c1b75"
+          }
+        ]
+      },
+      "dateCreated": "2017-06-07T16:05:31.000+0530",
+      "changedBy": null,
+      "dateChanged": null
+    },
+    "birthtime": null,
+    "deathdateEstimated": false,
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://localhost:8050/openmrs/ws/rest/v1/person/a751f0da-39ab-45a3-db52-21706f5ed201"
+      }
+    ],
+    "resourceVersion": "1.11"
+  },
+  "voided": false,
+  "auditInfo": {
+    "creator": {
+      "uuid": "c1c21e11-3f10-11e4-adec-0800271c1b75",
+      "display": "superman",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://localhost:8050/openmrs/ws/rest/v1/user/c1c21e11-3f10-11e4-adec-0800271c1b75"
+        }
+      ]
+    },
+    "dateCreated": "2017-06-07T16:05:31.000+0530",
+    "changedBy": null,
+    "dateChanged": null
+  },
+  "links": [
+    {
+      "rel": "self",
+      "uri": "http://localhost:8050/openmrs/ws/rest/v1/patient/a751f0da-39ab-45a3-db52-21706f5ed201"
+    }
+  ],
+  "resourceVersion": "1.8"
+}

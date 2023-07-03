@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Event {
+
+	private static final long version = 1L;
 	public final String eventId;
 	public final BahmniEventType eventType;
 	public final String payloadId;
