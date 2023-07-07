@@ -39,7 +39,7 @@
 		<openmrsPlatformVersion>2.5.10</openmrsPlatformVersion>
 		<openMRSWebServicesVersion>2.39.0</openMRSWebServicesVersion>
 		<springVersion>5.2.14.RELEASE</springVersion>
-		<junitVersion>4.13</junitVersion>
+		<junitVersion>4.13.1</junitVersion>
 		<powerMockVersion>2.0.7</powerMockVersion>
 		<hamcrestVersion>1.3</hamcrestVersion>
 		<mockitoVersion>3.5.11</mockitoVersion>
