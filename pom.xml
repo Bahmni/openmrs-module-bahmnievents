@@ -45,7 +45,6 @@
 		<mockitoVersion>3.5.11</mockitoVersion>
 		<argLine>-Xmx1024m</argLine>
 		<jacocoVersion>0.7.9</jacocoVersion>
-		<lombokVersion>1.16.0</lombokVersion>
 	</properties>
 
 	<build>
@@ -116,14 +115,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Lombok -->
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>${lombokVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
 			<!-- OpenMRS dependencies -->
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
