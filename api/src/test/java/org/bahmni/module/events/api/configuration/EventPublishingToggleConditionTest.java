@@ -1,4 +1,4 @@
-package org.bahmni.module.events.configuration;
+package org.bahmni.module.events.api.configuration;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

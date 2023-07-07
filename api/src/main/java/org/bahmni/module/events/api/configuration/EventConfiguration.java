@@ -1,7 +1,7 @@
-package org.bahmni.module.events.configuration;
+package org.bahmni.module.events.api.configuration;
 
-import org.bahmni.module.events.listener.PatientAdvice;
-import org.bahmni.module.events.publisher.EventPublisher;
+import org.bahmni.module.events.api.listener.PatientAdvice;
+import org.bahmni.module.events.api.publisher.EventPublisher;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;

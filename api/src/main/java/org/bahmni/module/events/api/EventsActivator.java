@@ -1,4 +1,4 @@
-package org.bahmni.module.events;
+package org.bahmni.module.events.api;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

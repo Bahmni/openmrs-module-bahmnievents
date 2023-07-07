@@ -1,4 +1,4 @@
-package org.bahmni.module.events.configuration;
+package org.bahmni.module.events.api.configuration;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;

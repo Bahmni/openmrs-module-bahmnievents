@@ -1,6 +1,6 @@
-package org.bahmni.module.events.listener;
+package org.bahmni.module.events.api.listener;
 
-import org.bahmni.module.events.model.Event;
+import org.bahmni.module.events.api.model.Event;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.bahmni.module.events.model.BahmniEventType.PATIENT_CREATED_UPDATED;
+import static org.bahmni.module.events.api.model.BahmniEventType.PATIENT_CREATED_UPDATED;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

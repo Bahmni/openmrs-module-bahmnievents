@@ -15,7 +15,7 @@
         <require_module>org.bahmni.module.bahmnicore</require_module>
     </require_modules>
 
-    <activator>org.bahmni.module.events.EventsActivator</activator>
+    <activator>org.bahmni.module.events.api.EventsActivator</activator>
 
     <require_version>1.11.6</require_version>
 </module>

@@ -1,6 +1,6 @@
-package org.bahmni.module.events.publisher;
+package org.bahmni.module.events.api.publisher;
 
-import org.bahmni.module.events.model.Event;
+import org.bahmni.module.events.api.model.Event;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,7 @@ import org.springframework.jms.core.MessageCreator;
 import java.io.IOException;
 import java.util.Date;
 
-import static org.bahmni.module.events.model.BahmniEventType.PATIENT_CREATED_UPDATED;
+import static org.bahmni.module.events.api.model.BahmniEventType.PATIENT_CREATED_UPDATED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
