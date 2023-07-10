@@ -27,7 +27,7 @@ public class JMSMessageCreator implements MessageCreator {
 
     private Message addMetaInfoInHeaders(TextMessage message) throws JMSException {
 
-        message.setStringProperty(EVENT_ID.key(), event.eventType.name());
+        message.setStringProperty(EVENT_TYPE.key(), event.eventType.name());
         message.setStringProperty(PAYLOAD_ID.key(), event.payloadId);
         message.setStringProperty(EVENT_ID.key(), event.eventId);
         message.setStringProperty(PUBLISHED_DATE_TIME.key(), event.publishedDateTime.toString());

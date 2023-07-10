@@ -67,7 +67,7 @@ public class JMSMessageCreatorTest {
 
         jmsMessageCreator.createMessage(session);
 
-        Assertions.assertEquals(EVENT_ID.key(), propertyKeyCaptor.getAllValues().get(0));
+        Assertions.assertEquals(EVENT_TYPE.key(), propertyKeyCaptor.getAllValues().get(0));
         Assertions.assertEquals("BAHMNI_PATIENT_CREATED", propertyValueCaptor.getAllValues().get(0));
         Assertions.assertEquals(PAYLOAD_ID.key(), propertyKeyCaptor.getAllValues().get(1));
         Assertions.assertEquals("bce786c0-aa57-480d-be6a-23692590086b", propertyValueCaptor.getAllValues().get(1));
