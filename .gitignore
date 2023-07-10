@@ -9,3 +9,13 @@ target
 *.jar
 *.war
 *.ear
+.idea
+api/
+.DS_Store
+
+target/
+*.iml
+*/logs/*
+logs/*
+classes/
+.mvn/wrapper/*.jar

@@ -7,6 +7,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.event.EventListener;
 import org.springframework.jms.core.JmsTemplate;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
 import java.io.IOException;
 
 public class EventPublisher {
@@ -25,8 +27,27 @@ public class EventPublisher {
 	@EventListener
 	public void onApplicationEvent(Event event) {
 		String jsonPayload = toJsonPayload(event.payload);
-		jmsTemplate.send(event.eventType.topic(), session -> session.createTextMessage(jsonPayload));
+		jmsTemplate.send(event.eventType.topic(), session -> {
+			TextMessage message = session.createTextMessage(jsonPayload);
+			addMetaInfoInHeaders(message, event);
+			return message;
+		});
 		log.info("Published Message with id : " + event.payloadId);
+	}
+
+	private void addMetaInfoInHeaders(TextMessage message, Event event) {
+		try {
+			message.setStringProperty("eventType", event.eventType.name());
+			message.setStringProperty("payloadId", event.payloadId);
+			message.setStringProperty("eventId", event.eventId);
+			message.setStringProperty("publishedDateTime", event.publishedDateTime.toString());
+
+			log.info("Added meta info for patient in headers : " + event.payloadId);
+		}
+		catch (JMSException exception) {
+			log.error("Error while adding meta info to message : ", exception);
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private String toJsonPayload(Object event) {
