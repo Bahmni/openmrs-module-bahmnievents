@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_CREATED;
+import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_UPDATED;
 
 public class PatientAdvice implements AfterReturningAdvice, ApplicationEventPublisherAware, MethodBeforeAdvice {
 	
@@ -26,15 +27,14 @@ public class PatientAdvice implements AfterReturningAdvice, ApplicationEventPubl
 	private ApplicationEventPublisher eventPublisher;
 
 	private final ThreadLocal<Map<String,Integer>> threadLocal = new ThreadLocal<>();
+	private final String PATIENT_ID_KEY = "patientId";
+
 
 	@Override
 	public void afterReturning(Object returnValue, Method method, Object[] arguments, Object target) {
 
 		Map<String, Integer> patientInfo = threadLocal.get();
-		BahmniEventType eventType = BahmniEventType.BAHMNI_PATIENT_UPDATED;
-		if(patientInfo == null || patientInfo.isEmpty() || patientInfo.get("patientId") == null) {
-			eventType = BAHMNI_PATIENT_CREATED;
-		}
+		BahmniEventType eventType = patientInfo != null && patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED: BAHMNI_PATIENT_UPDATED;
 		threadLocal.remove();
 
 		Patient patient = (Patient) returnValue;
@@ -56,7 +56,7 @@ public class PatientAdvice implements AfterReturningAdvice, ApplicationEventPubl
 		Patient patient = (Patient) objects[0];
 
 		Map<String, Integer> patientInfo = new HashMap<>(1);
-		patientInfo.put("patientId", patient.getId());
+		patientInfo.put(PATIENT_ID_KEY, patient.getId());
 		threadLocal.set(patientInfo);
 	}
 }

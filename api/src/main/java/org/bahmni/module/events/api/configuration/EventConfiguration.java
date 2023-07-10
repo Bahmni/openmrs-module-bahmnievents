@@ -1,8 +1,8 @@
 package org.bahmni.module.events.api.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bahmni.module.events.api.listener.PatientAdvice;
 import org.bahmni.module.events.api.publisher.EventPublisher;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;

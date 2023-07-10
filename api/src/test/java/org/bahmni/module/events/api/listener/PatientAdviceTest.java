@@ -45,6 +45,9 @@ public class PatientAdviceTest {
 	public void shouldVerifyBahmniEventPublishIsCalledGivenPatientIsCreated() {
 		Patient newPatient = getPatient();
 		PowerMockito.mockStatic(ConversionUtil.class);
+        Object[] args = {newPatient};
+        newPatient.setId(null);
+        patientAdvice.before(null, args, null);
 		PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
 		
 		patientAdvice.afterReturning(getPatient(), null, null, null);
