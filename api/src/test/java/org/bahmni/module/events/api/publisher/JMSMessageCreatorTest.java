@@ -16,6 +16,7 @@ import javax.jms.TextMessage;
 import java.util.Date;
 
 import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_CREATED;
+import static org.bahmni.module.events.api.publisher.JMSMessageCreator.EventHeaderKey.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -66,12 +67,12 @@ public class JMSMessageCreatorTest {
 
         jmsMessageCreator.createMessage(session);
 
-        Assertions.assertEquals("eventType", propertyKeyCaptor.getAllValues().get(0));
+        Assertions.assertEquals(EVENT_ID.key(), propertyKeyCaptor.getAllValues().get(0));
         Assertions.assertEquals("BAHMNI_PATIENT_CREATED", propertyValueCaptor.getAllValues().get(0));
-        Assertions.assertEquals("payloadId", propertyKeyCaptor.getAllValues().get(1));
+        Assertions.assertEquals(PAYLOAD_ID.key(), propertyKeyCaptor.getAllValues().get(1));
         Assertions.assertEquals("bce786c0-aa57-480d-be6a-23692590086b", propertyValueCaptor.getAllValues().get(1));
-        Assertions.assertEquals("eventId", propertyKeyCaptor.getAllValues().get(2));
-        Assertions.assertEquals("publishedDateTime", propertyKeyCaptor.getAllValues().get(3));
+        Assertions.assertEquals(EVENT_ID.key(), propertyKeyCaptor.getAllValues().get(2));
+        Assertions.assertEquals(PUBLISHED_DATE_TIME.key(), propertyKeyCaptor.getAllValues().get(3));
     }
 
     @Test
