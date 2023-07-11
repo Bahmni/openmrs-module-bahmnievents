@@ -72,7 +72,9 @@ public class JMSMessageCreatorTest {
         Assertions.assertEquals(PAYLOAD_ID.key(), propertyKeyCaptor.getAllValues().get(1));
         Assertions.assertEquals("bce786c0-aa57-480d-be6a-23692590086b", propertyValueCaptor.getAllValues().get(1));
         Assertions.assertEquals(EVENT_ID.key(), propertyKeyCaptor.getAllValues().get(2));
+        Assertions.assertNotNull(propertyValueCaptor.getAllValues().get(2));
         Assertions.assertEquals(PUBLISHED_DATE_TIME.key(), propertyKeyCaptor.getAllValues().get(3));
+        Assertions.assertNotNull(propertyValueCaptor.getAllValues().get(3));
     }
 
     @Test
