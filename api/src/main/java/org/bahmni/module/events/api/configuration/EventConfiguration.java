@@ -1,10 +1,12 @@
 package org.bahmni.module.events.api.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bahmni.module.events.api.listener.AppointmentAdvice;
 import org.bahmni.module.events.api.listener.PatientAdvice;
 import org.bahmni.module.events.api.publisher.EventPublisher;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -61,6 +63,26 @@ public class EventConfiguration {
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
         advisor.setPointcut(patientEventAdvicePointcut);
         advisor.setAdvice(patientEventAdvice);
+        return advisor;
+    }
+
+    @Bean
+    public AppointmentAdvice appointmentEventAdvice(ApplicationContext applicationContext) {
+        return new AppointmentAdvice(applicationContext);
+    }
+
+    @Bean
+    public AspectJExpressionPointcut appointmentEventAdvicePointcut() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(* org.openmrs.module.appointments.service.AppointmentsService.validateAndSave(..))");
+        return pointcut;
+    }
+
+    @Bean
+    public DefaultPointcutAdvisor appointmentAdviceAdvisor(AspectJExpressionPointcut appointmentEventAdvicePointcut, AppointmentAdvice appointmentEventAdvice) {
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+        advisor.setPointcut(appointmentEventAdvicePointcut);
+        advisor.setAdvice(appointmentEventAdvice);
         return advisor;
     }
 
