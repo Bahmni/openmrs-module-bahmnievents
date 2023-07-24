@@ -34,16 +34,19 @@ public class PatientAdvice implements AfterReturningAdvice, ApplicationEventPubl
 	public void afterReturning(Object returnValue, Method method, Object[] arguments, Object target) {
 
 		Map<String, Integer> patientInfo = threadLocal.get();
-		BahmniEventType eventType = patientInfo != null && patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED: BAHMNI_PATIENT_UPDATED;
-		threadLocal.remove();
+		// TODO: This is a workaround to avoid publishing duplicate events because currently the event is getting called twice. Need to find out the reason and resolve it.
+		if (patientInfo != null) {
+			BahmniEventType eventType = patientInfo != null && patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED: BAHMNI_PATIENT_UPDATED;
+			threadLocal.remove();
 
-		Patient patient = (Patient) returnValue;
-		
-		Object representation = ConversionUtil.convertToRepresentation(patient, Representation.FULL);
-		Event event = new Event(eventType, representation, patient.getUuid());
-		eventPublisher.publishEvent(event);
-		
-		log.info("Successfully published event with uuid : " + patient.getUuid());
+			Patient patient = (Patient) returnValue;
+
+			Object representation = ConversionUtil.convertToRepresentation(patient, Representation.FULL);
+			Event event = new Event(eventType, representation, patient.getUuid());
+			eventPublisher.publishEvent(event);
+
+			log.info("Successfully published event with uuid : " + patient.getUuid());
+		}
 	}
 	
 	@Override
