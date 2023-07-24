@@ -264,17 +264,15 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>repo.mybahmni.org</id>
-			<name>bahmni-artifactory-snapshots</name>
-			<url>https://repo.mybahmni.org.s3.amazonaws.com/artifactory/snapshot</url>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
 			<snapshots>
-				<updatePolicy>always</updatePolicy>
+				<enabled>true</enabled>
 			</snapshots>
-		</repository>
-		<repository>
-			<id>repo.mybahmni.org-release</id>
-			<name>bahmni-artifactory-release</name>
-			<url>https://repo.mybahmni.org.s3.amazonaws.com/artifactory/release</url>
 		</repository>
 	</repositories>
 
