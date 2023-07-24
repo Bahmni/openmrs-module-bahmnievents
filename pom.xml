@@ -148,7 +148,12 @@
 				<version>${openmrsPlatformVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-
+			<dependency>
+				<groupId>org.bahmni.module</groupId>
+				<artifactId>appointments-ipd-api</artifactId>
+				<version>1.8.0-SNAPSHOT</version>
+				<scope>provided</scope>
+			</dependency>
 			<!-- OpenMRS Test dependencies -->
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
