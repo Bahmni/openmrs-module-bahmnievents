@@ -34,6 +34,7 @@ public class AppointmentAdvice implements AfterReturningAdvice, ApplicationEvent
 	@Override
 	public void afterReturning(Object returnValue, Method method, Object[] arguments, Object target) {
 		Map<String, Integer> appointmentInfo = threadLocal.get();
+		// TODO: This is a workaround to avoid publishing duplicate events because currently the event is getting called twice. Need to find out the reason and resolve it.
 		if (appointmentInfo != null) {
 			BahmniEventType eventType = appointmentInfo.get(APPOINTMENT_ID_KEY) == null ? BAHMNI_APPOINTMENT_CREATED : BAHMNI_APPOINTMENT_UPDATED;
 			threadLocal.remove();
