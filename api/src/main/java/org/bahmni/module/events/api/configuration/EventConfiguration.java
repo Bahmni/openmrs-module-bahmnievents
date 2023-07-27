@@ -2,6 +2,7 @@ package org.bahmni.module.events.api.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bahmni.module.events.api.listener.AppointmentAdvice;
+import org.bahmni.module.events.api.listener.EncounterAdvice;
 import org.bahmni.module.events.api.listener.PatientAdvice;
 import org.bahmni.module.events.api.publisher.EventPublisher;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
@@ -83,6 +84,26 @@ public class EventConfiguration {
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
         advisor.setPointcut(appointmentEventAdvicePointcut);
         advisor.setAdvice(appointmentEventAdvice);
+        return advisor;
+    }
+
+    @Bean
+    public EncounterAdvice encounterEventAdvice() {
+        return new EncounterAdvice();
+    }
+
+    @Bean
+    public AspectJExpressionPointcut encounterEventAdvicePointcut() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(* org.openmrs.api.EncounterService.saveEncounter(..))");
+        return pointcut;
+    }
+
+    @Bean
+    public DefaultPointcutAdvisor encounterAdviceAdvisor(AspectJExpressionPointcut encounterEventAdvicePointcut, EncounterAdvice encounterEventAdvice) {
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+        advisor.setPointcut(encounterEventAdvicePointcut);
+        advisor.setAdvice(encounterEventAdvice);
         return advisor;
     }
 
