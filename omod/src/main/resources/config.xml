@@ -14,6 +14,11 @@
 		<require_module>org.bahmni.module.bahmnicore</require_module>
 	</require_modules>
 
+	<advice>
+		<point>org.openmrs.api.PatientService</point>
+		<class>org.bahmni.module.events.api.listener.PatientAdvice</class>
+	</advice>
+
 	<activator>org.bahmni.module.events.api.EventsActivator</activator>
 </module>
 

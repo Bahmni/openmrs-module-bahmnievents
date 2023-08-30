@@ -7,15 +7,15 @@ import org.bahmni.module.events.api.model.Event;
 import org.springframework.context.event.EventListener;
 import org.springframework.jms.core.JmsTemplate;
 
-public class EventPublisher {
+public class JMSEventPublisher {
 
-	private static final Logger log = LogManager.getLogger(EventPublisher.class);
+	private static final Logger log = LogManager.getLogger(JMSEventPublisher.class);
 	
 	private final JmsTemplate jmsTemplate;
 	
 	private final ObjectMapper objectMapper;
 	
-	public EventPublisher(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
+	public JMSEventPublisher(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
 		this.jmsTemplate = jmsTemplate;
 		this.objectMapper = objectMapper;
 	}
