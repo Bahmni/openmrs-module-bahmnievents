@@ -17,7 +17,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.context.ApplicationEventPublisher;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -37,7 +36,10 @@ public class PatientAdviceTest {
 	private PatientAdvice patientAdvice;
 	
 	private BahmniEventPublisher bahmniEventPublisher;
-	
+
+	private final String SAVE_PATIENT_METHOD_NAME = "savePatient";
+	private final String PURGE_PATIENT_METHOD_NAME = "purgePatient";
+
 	@Before
 	public void setUp() {
         bahmniEventPublisher = mock(BahmniEventPublisher.class);
@@ -46,7 +48,7 @@ public class PatientAdviceTest {
 
     @Test
     public void shouldVerifyTheEventPublishedIsNotGettingTriggeredGivenPatientNeitherCreatedNorUpdated() throws NoSuchMethodException {
-        Method savePatientMethod = PatientService.class.getMethod("purgePatient", Patient.class);
+        Method savePatientMethod = PatientService.class.getMethod(PURGE_PATIENT_METHOD_NAME, Patient.class);
         Patient newPatient = getPatient();
         PowerMockito.mockStatic(ConversionUtil.class);
         Object[] args = {newPatient};
@@ -61,7 +63,7 @@ public class PatientAdviceTest {
 	
 	@Test
 	public void shouldVerifyTheEventPublishedIsGettingTriggeredGivenPatientIsCreated() throws NoSuchMethodException {
-        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
+        Method savePatientMethod = PatientService.class.getMethod(SAVE_PATIENT_METHOD_NAME, Patient.class);
         Patient newPatient = getPatient();
 		PowerMockito.mockStatic(ConversionUtil.class);
         Object[] args = {newPatient};
@@ -77,7 +79,7 @@ public class PatientAdviceTest {
     @Test
     public void shouldPublishCreateEventGivenPatientIsCreated() throws NoSuchMethodException {
         Patient newPatient = getPatient();
-        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
+        Method savePatientMethod = PatientService.class.getMethod(SAVE_PATIENT_METHOD_NAME, Patient.class);
 
         PowerMockito.mockStatic(ConversionUtil.class);
         PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
@@ -97,7 +99,7 @@ public class PatientAdviceTest {
     @Test
     public void shouldPublishUpdateEventGivenPatientIsUpdated() throws NoSuchMethodException {
         Patient newPatient = getPatient();
-        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
+        Method savePatientMethod = PatientService.class.getMethod(SAVE_PATIENT_METHOD_NAME, Patient.class);
 
         PowerMockito.mockStatic(ConversionUtil.class);
         PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
@@ -116,7 +118,7 @@ public class PatientAdviceTest {
 	@Test
 	public void shouldVerifyEventPublishedContentGivenPatientIsCreated() throws NoSuchMethodException {
 		Patient newPatient = getPatient();
-        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
+        Method savePatientMethod = PatientService.class.getMethod(SAVE_PATIENT_METHOD_NAME, Patient.class);
 		
 		PowerMockito.mockStatic(ConversionUtil.class);
 		PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
