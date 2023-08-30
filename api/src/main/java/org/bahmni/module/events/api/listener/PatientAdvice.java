@@ -1,5 +1,6 @@
 package org.bahmni.module.events.api.listener;
 
+import com.google.common.collect.Sets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bahmni.module.events.api.model.BahmniEventType;
@@ -15,6 +16,7 @@ import org.springframework.aop.MethodBeforeAdvice;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_CREATED;
 import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_UPDATED;
@@ -25,6 +27,7 @@ public class PatientAdvice implements AfterReturningAdvice, MethodBeforeAdvice {
 	private final BahmniEventPublisher eventPublisher;
 	private final ThreadLocal<Map<String,Integer>> threadLocal = new ThreadLocal<>();
 	private final String PATIENT_ID_KEY = "patientId";
+	private final Set<String> adviceMethodNames = Sets.newHashSet("savePatient");
 
 	public PatientAdvice() {
 		this.eventPublisher = Context.getRegisteredComponent("bahmniEventPublisher", BahmniEventPublisher.class);
@@ -36,7 +39,7 @@ public class PatientAdvice implements AfterReturningAdvice, MethodBeforeAdvice {
 
 	@Override
 	public void afterReturning(Object returnValue, Method method, Object[] arguments, Object target) {
-		if (method.getName().equals("savePatient")) {
+		if (adviceMethodNames.contains(method.getName())) {
 			Map<String, Integer> patientInfo = threadLocal.get();
 			BahmniEventType eventType = patientInfo != null && patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED : BAHMNI_PATIENT_UPDATED;
 			threadLocal.remove();
@@ -53,7 +56,7 @@ public class PatientAdvice implements AfterReturningAdvice, MethodBeforeAdvice {
 
 	@Override
 	public void before(Method method, Object[] objects, Object o) {
-		if (method.getName().equals("savePatient")) {
+		if (adviceMethodNames.contains(method.getName())) {
 			Patient patient = (Patient) objects[0];
 
 			Map<String, Integer> patientInfo = new HashMap<>(1);
