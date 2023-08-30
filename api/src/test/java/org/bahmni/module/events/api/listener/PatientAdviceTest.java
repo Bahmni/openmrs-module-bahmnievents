@@ -2,6 +2,7 @@ package org.bahmni.module.events.api.listener;
 
 import org.bahmni.module.events.api.model.BahmniEventType;
 import org.bahmni.module.events.api.model.Event;
+import org.bahmni.module.events.api.publisher.BahmniEventPublisher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
+import org.openmrs.api.PatientService;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.powermock.api.mockito.PowerMockito;
@@ -17,6 +19,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,80 +34,99 @@ import static org.mockito.Mockito.*;
 @RunWith(PowerMockRunner.class)
 public class PatientAdviceTest {
 	
-	private final PatientAdvice patientAdvice = new PatientAdvice();
+	private PatientAdvice patientAdvice;
 	
-	private ApplicationEventPublisher applicationEventPublisher;
+	private BahmniEventPublisher bahmniEventPublisher;
 	
 	@Before
 	public void setUp() {
-		applicationEventPublisher = mock(ApplicationEventPublisher.class);
-		patientAdvice.setApplicationEventPublisher(applicationEventPublisher);
-	}
-	
-	@Test
-	public void shouldVerifyBahmniEventPublishIsCalledGivenPatientIsCreated() {
-		Patient newPatient = getPatient();
-		PowerMockito.mockStatic(ConversionUtil.class);
-        Object[] args = {newPatient};
-        newPatient.setId(null);
-        patientAdvice.before(null, args, null);
-		PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
-		
-		patientAdvice.afterReturning(getPatient(), null, null, null);
-		
-		verify(applicationEventPublisher, times(1)).publishEvent(any(Event.class));
+        bahmniEventPublisher = mock(BahmniEventPublisher.class);
+        patientAdvice = new PatientAdvice(bahmniEventPublisher);
 	}
 
     @Test
-    public void shouldPublishCreateEventGivenPatientIsCreated() {
+    public void shouldVerifyTheEventPublishedIsNotGettingTriggeredGivenPatientNeitherCreatedNorUpdated() throws NoSuchMethodException {
+        Method savePatientMethod = PatientService.class.getMethod("purgePatient", Patient.class);
         Patient newPatient = getPatient();
+        PowerMockito.mockStatic(ConversionUtil.class);
+        Object[] args = {newPatient};
+        newPatient.setId(null);
+        patientAdvice.before(savePatientMethod, args, null);
+        PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
+
+        patientAdvice.afterReturning(getPatient(), savePatientMethod, null, null);
+
+        verify(bahmniEventPublisher, times(0)).publishEvent(any(Event.class));
+    }
+	
+	@Test
+	public void shouldVerifyTheEventPublishedIsGettingTriggeredGivenPatientIsCreated() throws NoSuchMethodException {
+        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
+        Patient newPatient = getPatient();
+		PowerMockito.mockStatic(ConversionUtil.class);
+        Object[] args = {newPatient};
+        newPatient.setId(null);
+        patientAdvice.before(savePatientMethod, args, null);
+		PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
+		
+		patientAdvice.afterReturning(getPatient(), savePatientMethod, null, null);
+		
+		verify(bahmniEventPublisher, times(1)).publishEvent(any(Event.class));
+	}
+
+    @Test
+    public void shouldPublishCreateEventGivenPatientIsCreated() throws NoSuchMethodException {
+        Patient newPatient = getPatient();
+        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
 
         PowerMockito.mockStatic(ConversionUtil.class);
         PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
 
         Object[] args = {newPatient};
         newPatient.setId(null);
-        patientAdvice.before(null, args, null);
-        patientAdvice.afterReturning(newPatient, null, null, null);
+        patientAdvice.before(savePatientMethod, args, null);
+        patientAdvice.afterReturning(newPatient, savePatientMethod, null, null);
 
         ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-        verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+        verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 
         Event event = eventArgumentCaptor.getValue();
         assertEquals(BahmniEventType.BAHMNI_PATIENT_CREATED, event.eventType);
     }
 
     @Test
-    public void shouldPublishUpdateEventGivenPatientIsUpdated() {
+    public void shouldPublishUpdateEventGivenPatientIsUpdated() throws NoSuchMethodException {
         Patient newPatient = getPatient();
+        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
 
         PowerMockito.mockStatic(ConversionUtil.class);
         PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
 
         Object[] args = {newPatient};
-        patientAdvice.before(null, args, null);
-        patientAdvice.afterReturning(newPatient, null, null, null);
+        patientAdvice.before(savePatientMethod, args, null);
+        patientAdvice.afterReturning(newPatient, savePatientMethod, null, null);
 
         ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-        verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+        verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 
         Event event = eventArgumentCaptor.getValue();
         assertEquals(BahmniEventType.BAHMNI_PATIENT_UPDATED, event.eventType);
     }
 	
 	@Test
-	public void shouldVerifyPublishedContentForAPatient() {
+	public void shouldVerifyEventPublishedContentGivenPatientIsCreated() throws NoSuchMethodException {
 		Patient newPatient = getPatient();
+        Method savePatientMethod = PatientService.class.getMethod("savePatient", Patient.class);
 		
 		PowerMockito.mockStatic(ConversionUtil.class);
 		PowerMockito.when(ConversionUtil.convertToRepresentation(getPatient(), Representation.FULL)).thenReturn(newPatient);
 
         Object[] args = {newPatient};
-        patientAdvice.before(null, args, null);
-		patientAdvice.afterReturning(newPatient, null, null, null);
+        patientAdvice.before(savePatientMethod, args, null);
+		patientAdvice.afterReturning(newPatient, savePatientMethod, null, null);
 		
 		ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-		verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+		verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 		
 		Event event = eventArgumentCaptor.getValue();
 		assertEquals(BahmniEventType.BAHMNI_PATIENT_UPDATED, event.eventType);

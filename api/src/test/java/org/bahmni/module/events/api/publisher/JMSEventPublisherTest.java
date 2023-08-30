@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.openmrs.Person;
-import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.springframework.jms.core.JmsTemplate;
 
 import java.util.Date;
@@ -15,14 +14,14 @@ import static org.bahmni.module.events.api.model.BahmniEventType.BAHMNI_PATIENT_
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventPublisherTest {
+public class JMSEventPublisherTest {
 	
 	@Test
 	public void shouldPublishEventOnTopicNameAssociateWithEventType() {
-		EventPublisher eventPublisher;
+		JMSEventPublisher eventPublisher;
 		JmsTemplate jmsTemplate = mock(JmsTemplate.class);
 		ObjectMapper objectMapper = new ObjectMapper();
-		eventPublisher = new EventPublisher(jmsTemplate, objectMapper);
+		eventPublisher = new JMSEventPublisher(jmsTemplate, objectMapper);
 
 		Person person = getPerson();
 		Event event = new Event(BAHMNI_PATIENT_CREATED, person, person.getUuid());

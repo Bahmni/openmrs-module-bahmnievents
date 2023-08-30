@@ -1,10 +1,8 @@
 package org.bahmni.module.events.api.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bahmni.module.events.api.listener.PatientAdvice;
-import org.bahmni.module.events.api.publisher.EventPublisher;
-import org.springframework.aop.aspectj.AspectJExpressionPointcut;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.bahmni.module.events.api.publisher.BahmniEventPublisher;
+import org.bahmni.module.events.api.publisher.JMSEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +12,9 @@ import org.springframework.jndi.JndiObjectFactoryBean;
 
 import javax.jms.ConnectionFactory;
 
-@Conditional(EventPublishingToggleCondition.class)
+@Conditional(JMSEventPublishingToggleCondition.class)
 @Configuration
-public class EventConfiguration {
+public class JMSEventPublisherConfiguration {
 
     @Bean
     public JndiObjectFactoryBean eventJndiObjectFactoryBean() {
@@ -45,27 +43,7 @@ public class EventConfiguration {
     }
 
     @Bean
-    public PatientAdvice patientEventAdvice() {
-        return new PatientAdvice();
-    }
-
-    @Bean
-    public AspectJExpressionPointcut patientEventAdvicePointcut() {
-        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("execution(* org.openmrs.api.PatientService.savePatient(..))");
-        return pointcut;
-    }
-
-    @Bean
-    public DefaultPointcutAdvisor patientAdviceAdvisor(AspectJExpressionPointcut patientEventAdvicePointcut, PatientAdvice patientEventAdvice) {
-        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-        advisor.setPointcut(patientEventAdvicePointcut);
-        advisor.setAdvice(patientEventAdvice);
-        return advisor;
-    }
-
-    @Bean
-    public EventPublisher eventPublisher(JmsTemplate jmsTemplate) {
-        return new EventPublisher(jmsTemplate, new ObjectMapper());
+    public JMSEventPublisher jmsEventPublisher(JmsTemplate jmsTemplate) {
+        return new JMSEventPublisher(jmsTemplate, new ObjectMapper());
     }
 }
