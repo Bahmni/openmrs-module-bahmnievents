@@ -2,19 +2,21 @@ package org.bahmni.module.events.api.listener;
 
 import org.bahmni.module.events.api.model.BahmniEventType;
 import org.bahmni.module.events.api.model.Event;
+import org.bahmni.module.events.api.publisher.BahmniEventPublisher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.openmrs.Encounter;
+import org.openmrs.api.EncounterService;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.context.ApplicationEventPublisher;
 
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -26,32 +28,35 @@ import static org.mockito.Mockito.*;
 @RunWith(PowerMockRunner.class)
 public class EncounterAdviceTest {
 
-	private final EncounterAdvice encounterAdvice = new EncounterAdvice();
+	private EncounterAdvice encounterAdvice;
+    private BahmniEventPublisher bahmniEventPublisher;
 
-	private ApplicationEventPublisher applicationEventPublisher;
+    private final String ENCOUNTER_SAVE_METHOD_NAME = "saveEncounter";
 
 	@Before
 	public void setUp() {
-		applicationEventPublisher = mock(ApplicationEventPublisher.class);
-        encounterAdvice.setApplicationEventPublisher(applicationEventPublisher);
+        bahmniEventPublisher = mock(BahmniEventPublisher.class);
+        encounterAdvice = new EncounterAdvice(bahmniEventPublisher);
 	}
 
 	@Test
-	public void shouldVerifyBahmniEventPublishIsCalledGivenEncounterIsCreated() {
+	public void shouldVerifyBahmniEventPublishIsCalledGivenEncounterIsCreated() throws NoSuchMethodException {
+        Method saveEncounterMethod = EncounterService.class.getMethod(ENCOUNTER_SAVE_METHOD_NAME, Encounter.class);
 		Encounter newEncounter = getEncounter();
 		PowerMockito.mockStatic(ConversionUtil.class);
         Object[] args = {newEncounter};
         newEncounter.setId(null);
-        encounterAdvice.before(null, args, null);
+        encounterAdvice.before(saveEncounterMethod, args, null);
 		PowerMockito.when(ConversionUtil.convertToRepresentation(getEncounter(), Representation.FULL)).thenReturn(newEncounter);
 
-		encounterAdvice.afterReturning(getEncounter(), null, null, null);
+		encounterAdvice.afterReturning(getEncounter(), saveEncounterMethod, null, null);
 
-		verify(applicationEventPublisher, times(1)).publishEvent(any(Event.class));
+		verify(bahmniEventPublisher, times(1)).publishEvent(any(Event.class));
 	}
 
     @Test
-    public void shouldPublishCreateEventGivenEncounterIsCreated() {
+    public void shouldPublishCreateEventGivenEncounterIsCreated() throws NoSuchMethodException {
+        Method saveEncounterMethod = EncounterService.class.getMethod(ENCOUNTER_SAVE_METHOD_NAME, Encounter.class);
         Encounter newEncounter = getEncounter();
 
         PowerMockito.mockStatic(ConversionUtil.class);
@@ -59,47 +64,49 @@ public class EncounterAdviceTest {
 
         Object[] args = {newEncounter};
         newEncounter.setId(null);
-        encounterAdvice.before(null, args, null);
-        encounterAdvice.afterReturning(newEncounter, null, null, null);
+        encounterAdvice.before(saveEncounterMethod, args, null);
+        encounterAdvice.afterReturning(newEncounter, saveEncounterMethod, null, null);
 
         ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-        verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+        verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 
         Event event = eventArgumentCaptor.getValue();
         assertEquals(BahmniEventType.BAHMNI_ENCOUNTER_CREATED, event.eventType);
     }
 
     @Test
-    public void shouldPublishUpdateEventGivenEncounterIsUpdated() {
+    public void shouldPublishUpdateEventGivenEncounterIsUpdated() throws NoSuchMethodException {
+        Method saveEncounterMethod = EncounterService.class.getMethod(ENCOUNTER_SAVE_METHOD_NAME, Encounter.class);
         Encounter newEncounter = getEncounter();
 
         PowerMockito.mockStatic(ConversionUtil.class);
         PowerMockito.when(ConversionUtil.convertToRepresentation(getEncounter(), Representation.FULL)).thenReturn(newEncounter);
 
         Object[] args = {newEncounter};
-        encounterAdvice.before(null, args, null);
-        encounterAdvice.afterReturning(newEncounter, null, null, null);
+        encounterAdvice.before(saveEncounterMethod, args, null);
+        encounterAdvice.afterReturning(newEncounter, saveEncounterMethod, null, null);
 
         ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-        verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+        verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 
         Event event = eventArgumentCaptor.getValue();
         assertEquals(BahmniEventType.BAHMNI_ENCOUNTER_UPDATED, event.eventType);
     }
 
 	@Test
-	public void shouldVerifyPublishedContentForAEncounter() {
+	public void shouldVerifyPublishedContentForAEncounter() throws NoSuchMethodException {
+        Method saveEncounterMethod = EncounterService.class.getMethod(ENCOUNTER_SAVE_METHOD_NAME, Encounter.class);
 		Encounter newEncounter = getEncounter();
 
 		PowerMockito.mockStatic(ConversionUtil.class);
 		PowerMockito.when(ConversionUtil.convertToRepresentation(getEncounter(), Representation.FULL)).thenReturn(newEncounter);
 
         Object[] args = {newEncounter};
-        encounterAdvice.before(null, args, null);
-        encounterAdvice.afterReturning(newEncounter, null, null, null);
+        encounterAdvice.before(saveEncounterMethod, args, null);
+        encounterAdvice.afterReturning(newEncounter, saveEncounterMethod, null, null);
 
 		ArgumentCaptor<Event> eventArgumentCaptor = ArgumentCaptor.forClass(Event.class);
-		verify(applicationEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
+		verify(bahmniEventPublisher, times(1)).publishEvent(eventArgumentCaptor.capture());
 
 		Event event = eventArgumentCaptor.getValue();
 		assertEquals(BahmniEventType.BAHMNI_ENCOUNTER_UPDATED, event.eventType);
