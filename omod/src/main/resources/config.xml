@@ -5,9 +5,9 @@
 	<id>bahmni-events</id>
 	<name>Bahmni Events</name>
 	<version>1.0.0-SNAPSHOT</version>
-	<package>${MODULE_PACKAGE}</package>
+	<package>org.bahmni.module.events</package>
 	<author>Bahmni</author>
-	<description>${project.parent.description}</description>
+	<description>Bahmni events module to send business events which can be used by external services</description>
 
 	<require_modules>
 		<require_module>org.openmrs.module.webservices.rest</require_module>
@@ -28,6 +28,11 @@
 	<advice>
 		<point>org.openmrs.api.EncounterService</point>
 		<class>org.bahmni.module.events.api.listener.EncounterAdvice</class>
+	</advice>
+
+	<advice>
+		<point>org.openmrs.module.appointments.service.AppointmentRecurringPatternService</point>
+		<class>org.bahmni.module.events.api.listener.RecurringAppointmentAdvice</class>
 	</advice>
 
 	<activator>org.bahmni.module.events.api.EventsActivator</activator>

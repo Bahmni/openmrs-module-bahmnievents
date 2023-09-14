@@ -5,6 +5,8 @@ public enum BahmniEventType {
     BAHMNI_PATIENT_UPDATED("bahmni-patient"),
     BAHMNI_APPOINTMENT_CREATED("bahmni-appointment"),
     BAHMNI_APPOINTMENT_UPDATED("bahmni-appointment"),
+    BAHMNI_RECURRING_APPOINTMENT_CREATED("bahmni-recurring-appointment"),
+    BAHMNI_RECURRING_APPOINTMENT_UPDATED("bahmni-recurring-appointment"),
     BAHMNI_ENCOUNTER_CREATED("bahmni-encounter"),
     BAHMNI_ENCOUNTER_UPDATED("bahmni-encounter");
 
