@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.openmrs.Encounter;
 import org.openmrs.api.EncounterService;
+import org.openmrs.api.context.Context;
+import org.openmrs.api.context.UserContext;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.powermock.api.mockito.PowerMockito;
@@ -37,6 +39,8 @@ public class EncounterAdviceTest {
 	public void setUp() {
         bahmniEventPublisher = mock(BahmniEventPublisher.class);
         encounterAdvice = new EncounterAdvice(bahmniEventPublisher);
+        UserContext userContext =mock(UserContext.class);
+        Context.setUserContext(userContext);
 	}
 
 	@Test

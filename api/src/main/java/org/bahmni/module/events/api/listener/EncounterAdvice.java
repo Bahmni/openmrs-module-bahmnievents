@@ -55,7 +55,7 @@ public class EncounterAdvice implements AfterReturningAdvice, MethodBeforeAdvice
 				Event event = new Event(eventType, representation, encounter.getUuid());
 				eventPublisher.publishEvent(event);
 
-				System.out.println("Successfully published event with uuid : " + encounter.getUuid());
+				log.info("Successfully published event with uuid : " + encounter.getUuid());
 			}
 		}
 	}

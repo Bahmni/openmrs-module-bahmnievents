@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.openmrs.Person;
+import org.openmrs.api.context.Context;
+import org.openmrs.api.context.UserContext;
 
 import javax.jms.JMSException;
 import javax.jms.Session;
@@ -26,6 +28,8 @@ public class JMSMessageCreatorTest {
     public void shouldVerifyUUIDAndIdOfPatientInJsonPayloadGivenEventData() throws JMSException {
         ObjectMapper objectMapper = new ObjectMapper();
         Person person = getPerson();
+        UserContext userContext =mock(UserContext.class);
+        Context.setUserContext(userContext);
         Event event = new Event(BAHMNI_PATIENT_CREATED, person, person.getUuid());
 
         Session session = mock(Session.class);
@@ -45,12 +49,15 @@ public class JMSMessageCreatorTest {
 
         Assertions.assertTrue(textCaptor.getValue().contains("\"uuid\":\"bce786c0-aa57-480d-be6a-23692590086b\""));
         Assertions.assertTrue(textCaptor.getValue().contains("\"id\":123"));
+
     }
 
     @Test
     public void shouldVerifyHeadersInPatientEventGivenEventData() throws JMSException {
         ObjectMapper objectMapper = new ObjectMapper();
         Person person = getPerson();
+        UserContext userContext =mock(UserContext.class);
+        Context.setUserContext(userContext);
         Event event = new Event(BAHMNI_PATIENT_CREATED, person, person.getUuid());
 
         Session session = mock(Session.class);
@@ -79,8 +86,10 @@ public class JMSMessageCreatorTest {
 
     @Test
     public void shouldVerifyEventPayloadToBeSentInJsonFormatGivenEventData() throws JMSException, JsonProcessingException {
+        UserContext userContext= mock(UserContext.class);
         ObjectMapper objectMapper = new ObjectMapper();
         Person person = getPerson();
+        Context.setUserContext(userContext);
         Event event = new Event(BAHMNI_PATIENT_CREATED, person, person.getUuid());
 
         Session session = mock(Session.class);

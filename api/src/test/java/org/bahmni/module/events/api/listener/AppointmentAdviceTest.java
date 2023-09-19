@@ -7,8 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.context.Context;
+import org.openmrs.api.context.UserContext;
 import org.openmrs.module.appointments.model.Appointment;
 import org.openmrs.module.appointments.service.AppointmentsService;
 import org.openmrs.module.appointments.web.contract.AppointmentDefaultResponse;
@@ -45,6 +48,8 @@ public class AppointmentAdviceTest {
         appointmentMapper = mock(AppointmentMapper.class);
         bahmniEventPublisher = mock(BahmniEventPublisher.class);
         appointmentAdviceAdvice = new AppointmentAdvice(bahmniEventPublisher, appointmentMapper);
+        UserContext userContext =mock(UserContext.class);
+        Context.setUserContext(userContext);
     }
 	
 	@Test

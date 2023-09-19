@@ -11,6 +11,8 @@ import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.context.Context;
+import org.openmrs.api.context.UserContext;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.powermock.api.mockito.PowerMockito;
@@ -44,6 +46,8 @@ public class PatientAdviceTest {
     public void setUp() {
         bahmniEventPublisher = mock(BahmniEventPublisher.class);
         patientAdvice = new PatientAdvice(bahmniEventPublisher);
+        UserContext userContext =mock(UserContext.class);
+        Context.setUserContext(userContext);
     }
 
     @Test
