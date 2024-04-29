@@ -3,6 +3,7 @@ package org.bahmni.module.events.api.listener;
 import org.bahmni.module.events.api.model.BahmniEventType;
 import org.bahmni.module.events.api.model.Event;
 import org.bahmni.module.events.api.publisher.BahmniEventPublisher;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +31,15 @@ public class EncounterAdviceTest {
 
 	private EncounterAdvice encounterAdvice;
     private BahmniEventPublisher bahmniEventPublisher;
+    private SessionFactory sessionFactory;
 
     private final String ENCOUNTER_SAVE_METHOD_NAME = "saveEncounter";
 
 	@Before
 	public void setUp() {
         bahmniEventPublisher = mock(BahmniEventPublisher.class);
-        encounterAdvice = new EncounterAdvice(bahmniEventPublisher);
+        sessionFactory = mock(SessionFactory.class);
+        encounterAdvice = new EncounterAdvice(bahmniEventPublisher,sessionFactory);
 	}
 
 	@Test
