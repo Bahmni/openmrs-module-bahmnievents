@@ -10,6 +10,7 @@ target
 *.war
 *.ear
 .idea
+api/
 .DS_Store
 
 target/
