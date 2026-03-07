@@ -1,0 +1,17 @@
+# NOTICE
+
+## Openmrs Module Bahmnievents
+
+Copyright © 2026 CURE Intl
+
+### Contributors
+
+This repository has got source code generated at Thoughtworks.
+
+### Third-Party Components
+
+This repository includes third-party source code that is licensed separately:
+
+- Maven Wrapper (`mvnw`, `mvnw.cmd`, `.mvn/wrapper/*`)
+  Licensed under the Apache License, Version 2.0.
+  Copyright © the original authors.

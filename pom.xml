@@ -9,13 +9,12 @@
 	<name>Bahmni Events</name>
 	<description>Bahmni events module to send business events which can be used by external services</description>
 	<url>https://demo.mybahmni.org/bahmni/home/index.html</url>
-
 	<licenses>
-		<license>
-			<name>GNU AFFERO GENERAL PUBLIC LICENSE</name>
-			<url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
-		</license>
-	</licenses>
+        <license>
+            <name>Mozilla Public License Version 2.0</name>
+            <url>https://www.bahmni.org/license/mplv2hd</url>
+        </license>
+    </licenses>
 	<developers>
 		<developer>
 			<name>Bahmnitw</name>
