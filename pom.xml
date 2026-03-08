@@ -259,6 +259,13 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus-sonatype</id>
+			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<pluginRepositories>
 		<pluginRepository>
