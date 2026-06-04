@@ -1,7 +1,6 @@
 package org.bahmni.module.events.api.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bahmni.module.events.api.publisher.BahmniEventPublisher;
 import org.bahmni.module.events.api.publisher.JMSEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;

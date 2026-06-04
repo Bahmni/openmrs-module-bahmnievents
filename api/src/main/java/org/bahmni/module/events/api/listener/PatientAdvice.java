@@ -41,19 +41,20 @@ public class PatientAdvice implements AfterReturningAdvice, MethodBeforeAdvice {
 	public void afterReturning(Object returnValue, Method method, Object[] arguments, Object target) {
 		if (adviceMethodNames.contains(method.getName())) {
 			Map<String, Integer> patientInfo = threadLocal.get();
-			BahmniEventType eventType = patientInfo != null && patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED : BAHMNI_PATIENT_UPDATED;
-			threadLocal.remove();
+			if (patientInfo != null) {
+				BahmniEventType eventType = patientInfo.get(PATIENT_ID_KEY) == null ? BAHMNI_PATIENT_CREATED : BAHMNI_PATIENT_UPDATED;
+				threadLocal.remove();
 
-			Patient patient = (Patient) returnValue;
+				Patient patient = (Patient) returnValue;
 
-			Object representation = ConversionUtil.convertToRepresentation(patient, Representation.FULL);
-			Event event = new Event(eventType, representation, patient.getUuid());
-			eventPublisher.publishEvent(event);
+				Object representation = ConversionUtil.convertToRepresentation(patient, Representation.FULL);
+				Event event = new Event(eventType, representation, patient.getUuid());
+				eventPublisher.publishEvent(event);
 
-			log.info("Successfully published event with uuid : " + patient.getUuid());
+				log.info("Successfully published event with uuid : " + patient.getUuid());
+			}
 		}
 	}
-
 	@Override
 	public void before(Method method, Object[] objects, Object o) {
 		if (adviceMethodNames.contains(method.getName())) {

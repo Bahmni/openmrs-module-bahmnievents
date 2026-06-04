@@ -11,12 +11,30 @@
 
 	<require_modules>
 		<require_module>org.openmrs.module.webservices.rest</require_module>
+		<require_module>org.openmrs.module.emrapi</require_module>
 		<require_module>org.bahmni.module.bahmnicore</require_module>
+		<require_module>org.bahmni.module.appointments</require_module>
+		<require_module>org.openmrs.module.bacteriology</require_module>
 	</require_modules>
 
 	<advice>
 		<point>org.openmrs.api.PatientService</point>
 		<class>org.bahmni.module.events.api.listener.PatientAdvice</class>
+	</advice>
+
+	<advice>
+		<point>org.openmrs.module.appointments.service.AppointmentsService</point>
+		<class>org.bahmni.module.events.api.listener.AppointmentAdvice</class>
+	</advice>
+
+	<advice>
+		<point>org.openmrs.api.EncounterService</point>
+		<class>org.bahmni.module.events.api.listener.EncounterAdvice</class>
+	</advice>
+
+	<advice>
+		<point>org.openmrs.api.VisitService</point>
+		<class>org.bahmni.module.events.api.listener.VisitAdvice</class>
 	</advice>
 
 	<activator>org.bahmni.module.events.api.EventsActivator</activator>
